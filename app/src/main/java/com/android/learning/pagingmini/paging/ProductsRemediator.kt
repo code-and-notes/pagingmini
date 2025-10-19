@@ -1,19 +1,14 @@
-package com.android.learning.pagingmini
+package com.android.learning.pagingmini.paging
 
-import android.util.Log.e
 import androidx.paging.ExperimentalPagingApi
 import androidx.paging.LoadType
 import androidx.paging.PagingState
 import androidx.paging.RemoteMediator
 import androidx.room.withTransaction
 import com.android.learning.pagingmini.db.AppDatabase
-import com.android.learning.pagingmini.db.dao.RemoteKeyDao
 import com.android.learning.pagingmini.db.entities.ProductDTO
 import com.android.learning.pagingmini.db.entities.RemoteKeyDTO
 import com.android.learning.pagingmini.network.ProductService
-import com.android.learning.pagingmini.network.data.Product
-import com.android.learning.pagingmini.network.data.toProductDTO
-
 
 @OptIn(ExperimentalPagingApi::class)
 class ProductsRemediator(

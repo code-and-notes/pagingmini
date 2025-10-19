@@ -7,14 +7,17 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
-import com.android.learning.pagingmini.ProductsRemediator
+import com.android.learning.pagingmini.paging.ProductsRemediator
 import com.android.learning.pagingmini.db.AppDatabase
 import com.android.learning.pagingmini.db.entities.ProductDTO
 import com.android.learning.pagingmini.network.ProductService
+import com.android.learning.pagingmini.paging.ProductsPagingSource
 import com.android.learning.pagingmini.repository.ProductRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -47,5 +50,15 @@ class MainViewModel @Inject constructor(
         }
         return true
     }
+
+    fun getAllProductsFromNetwork(): Flow<PagingData<ProductDTO>> {
+        return Pager(
+            config = PagingConfig(pageSize = 10, prefetchDistance = 5, enablePlaceholders = false),
+            pagingSourceFactory = {ProductsPagingSource(productService = apiService)}
+        ).flow
+            .cachedIn(viewModelScope)
+    }
+
+
 
 }

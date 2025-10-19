@@ -16,4 +16,5 @@ class ProductRepository @Inject constructor(
         val products = response.products
         productDao.insertProducts(products)
     }
+
 }
